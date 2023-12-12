@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\barang;
+use App\Models\satuanbarang;
 
-class BarangController extends Controller
+class BarangApiController extends Controller
 {
     /**
      * Display a listing of the resource.

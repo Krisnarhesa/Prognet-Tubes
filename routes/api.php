@@ -2,6 +2,9 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BarangApiController;
+use App\Http\Controllers\PenjualanApiController;
+use App\Http\Controllers\UserApiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,3 +20,27 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/Barang', [BarangApiController::class, 'create'])->name('Create Barang');
+Route::post('/AddBarang', [BarangApiController::class, 'store'])->name('Store Barang');
+Route::get('/ListBarang', [BarangApiController::class, 'index'])->name('List Barang');
+Route::get('/DetailBarang/{id}', [BarangApiController::class, 'show'])->name('Show Barang');
+Route::get('/Barang/{id}/edit', [BarangApiController::class, 'edit'])->name('Edit Barang');
+Route::put('/UpdateBarang/{id}', [BarangApiController::class, 'update'])->name('Update Barang');
+Route::delete('/DeleteBarang/{id}', [BarangApiController::class, 'destroy'])->name('Delete Barang');
+
+Route::get('/Penjualan', [PenjualanApiController::class, 'create'])->name('Create Penjualan');
+Route::post('/AddPenjualan', [PenjualanApiController::class, 'store'])->name('Store Penjualan');
+Route::get('/ListPenjualan', [PenjualanApiController::class, 'index'])->name('List Penjualan');
+Route::get('/DetailPenjualan/{id}', [PenjualanApiController::class, 'show'])->name('Show Penjualan');
+Route::get('/Penjualan/{id}/edit', [PenjualanApiController::class, 'edit'])->name('Edit Penjualan');
+Route::put('/UpdatePenjualan/{id}', [PenjualanApiController::class, 'update'])->name('Update Penjualan');
+Route::delete('/DeletePenjualan/{id}', [PenjualanApiController::class, 'destroy'])->name('Delete Penjualan');
+
+Route::get('/User', [UserApiController::class, 'create'])->name('Create User');
+Route::post('/AddUser', [UserApiController::class, 'store'])->name('Store User');
+Route::get('/ListUser', [UserApiController::class, 'index'])->name('List User');
+Route::get('/DetailUser/{id}', [UserApiController::class, 'show'])->name('Show User');
+Route::get('/User/{id}/edit', [UserApiController::class, 'edit'])->name('Edit User');
+Route::put('/UpdateUser/{id}', [UserApiController::class, 'update'])->name('Update User');
+Route::delete('/DeleteUser/{id}', [UserApiController::class, 'destroy'])->name('Delete User');

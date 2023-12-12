@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\penjualan;
+use App\Models\detailpenjualan;
 
-class PenjualanController extends Controller
+class PenjualanApiController extends Controller
 {
     /**
      * Display a listing of the resource.
