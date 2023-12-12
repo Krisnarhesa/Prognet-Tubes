@@ -44,3 +44,19 @@ Route::get('/DetailUser/{id}', [UserApiController::class, 'show'])->name('Show U
 Route::get('/User/{id}/edit', [UserApiController::class, 'edit'])->name('Edit User');
 Route::put('/UpdateUser/{id}', [UserApiController::class, 'update'])->name('Update User');
 Route::delete('/DeleteUser/{id}', [UserApiController::class, 'destroy'])->name('Delete User');
+
+Route::get('/SatuanBarang', [BarangApiController::class, 'create'])->name('Create SatuanBarang');
+Route::post('/AddSatuanBarang', [BarangApiController::class, 'store'])->name('Store SatuanBarang');
+Route::get('/ListSatuanBarang', [BarangApiController::class, 'index'])->name('List SatuanBarang');
+Route::get('/DetailSatuanBarang/{id}', [BarangApiController::class, 'show'])->name('Show SatuanBarang');
+Route::get('/SatuanBarang/{id}/edit', [BarangApiController::class, 'edit'])->name('Edit SatuanBarang');
+Route::put('/UpdateSatuanBarang/{id}', [BarangApiController::class, 'update'])->name('Update SatuanBarang');
+Route::delete('/DeleteSatuanBarang/{id}', [BarangApiController::class, 'destroy'])->name('Delete SatuanBarang');
+
+Route::get('/DetailPenjualan', [PenjualanApiController::class, 'create'])->name('Create DetailPenjualan');
+Route::post('/AddDetailPenjualan', [PenjualanApiController::class, 'store'])->name('Store DetailPenjualan');
+Route::get('/ListDetailPenjualan', [PenjualanApiController::class, 'index'])->name('List DetailPenjualan');
+Route::get('/DetailDetailPenjualan/{id}', [PenjualanApiController::class, 'show'])->name('Show DetailPenjualan');
+Route::get('/DetailPenjualan/{id}/edit', [PenjualanApiController::class, 'edit'])->name('Edit DetailPenjualan');
+Route::put('/UpdateDetailPenjualan/{id}', [PenjualanApiController::class, 'update'])->name('Update DetailPenjualan');
+Route::delete('/DeleteDetailPenjualan/{id}', [PenjualanApiController::class, 'destroy'])->name('Delete DetailPenjualan');
