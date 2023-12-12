@@ -13,7 +13,8 @@ class BarangApiController extends Controller
      */
     public function index()
     {
-        //
+        return barang::all();
+        return satuanbarang::all();
     }
 
     /**

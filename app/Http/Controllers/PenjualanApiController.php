@@ -13,7 +13,8 @@ class PenjualanApiController extends Controller
      */
     public function index()
     {
-        //
+        return penjualan::all();
+        return detailpenjualan::all();
     }
 
     /**
