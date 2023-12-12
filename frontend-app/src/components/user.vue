@@ -2,7 +2,7 @@
 
 </template>
 
-<!-- <script>
+<script>
 import axios from "redaxios";
 
 export default {
@@ -75,4 +75,4 @@ export default {
         },
     }
 };
-</script> -->
+</script>

@@ -5,6 +5,17 @@
         <title>Kelompok 9 | Topik 2</title>
     </head>
     <body>
-        <script type="module" src="/src/main.js"></script>
+        <script>
+  if (window.Laravel === undefined) {
+    window.Laravel = {};
+  }
+
+  if (Auth.check()) {
+    window.Laravel.isLoggedin = true;
+    window.Laravel.user = Auth.user();
+  } else {
+    window.Laravel.isLoggedin = false;
+  }
+</script>
+    <script type="module" src="/src/main.js"></script>
     </body>
-</html>
