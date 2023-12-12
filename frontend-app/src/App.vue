@@ -1,7 +1,9 @@
 <script setup>
-import Topik2 from './components/HelloWorld.vue'
+import barang from './components/barang.vue'
+import user from './components/user.vue'
 </script>
 
 <template>
-  <Topik2/>
+  <barang/>
+  <user/>
 </template>

@@ -16,19 +16,13 @@ class UserApiController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        
+        $user = new user();
+        $user->fill($request->all())->save();
+        return $user;
     }
 
     /**
@@ -36,15 +30,7 @@ class UserApiController extends Controller
      */
     public function show(string $id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
+        return user::find($id);
     }
 
     /**
@@ -52,7 +38,9 @@ class UserApiController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $user = user::find($id);
+        $user->fill($request->all())->save();
+        return $user;
     }
 
     /**
@@ -60,6 +48,7 @@ class UserApiController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $user = user::find($id);
+        $user->delete();
     }
 }

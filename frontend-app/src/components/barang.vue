@@ -1,6 +1,5 @@
-<template>
+<template></template>
 
-</template>
 
 <script>
 import axios from "redaxios";
@@ -11,14 +10,14 @@ export default {
         return {
             allBarang: {},
             Barang: {
-                'id': '',
-                'kode': '',
-                'namabarang': '',
-                'harga': '',
-                'stok': '',
-                'satuan_id': ''
-            }
-        }
+                id: "",
+                kode: "",
+                namabarang: "",
+                harga: "",
+                stok: "",
+                satuan_id: "",
+            },
+        };
     },
     created() {
         console.log("Created !");
@@ -39,7 +38,7 @@ export default {
         remove(Barang) {
             var url = `http://127.0.0.1:8000/api/barang/${Barang.id}`;
             axios.delete(url).then(() => {
-                console.log('Data Berhasil Dihapus');
+                console.log("Data Berhasil Dihapus");
                 this.loadAllBarang();
             });
         },
@@ -47,36 +46,36 @@ export default {
             var url = `http://127.0.0.1:8000/api/barang/${Barang.id}`;
             axios.get(url).then(({ data }) => {
                 this.Barang = data;
-                console.log('Data Berhasil Dipilih');
+                console.log("Data Berhasil Dipilih");
                 console.log(this.Barang);
             });
         },
         simpan() {
-            if (this.Barang.id == '') {
+            if (this.Barang.id == "") {
                 //simpan baru
                 var url = `http://127.0.0.1:8000/api/barang`;
                 axios.post(url, this.Barang).then(() => {
-                    console.log('Data Berhasil Disimpan');
+                    console.log("Data Berhasil Disimpan");
                     this.loadAllBarang();
                     this.clear();
                 });
             } else {
                 var url = `http://127.0.0.1t:8000/api/barang/${this.Barang.id}`;
                 axios.put(url, this.Barang).then(() => {
-                    console.log('Data Berhasil Diedit');
+                    console.log("Data Berhasil Diedit");
                     this.loadAllBarang();
                     this.clear();
                 });
             }
         },
-        clear(){
-            this.Barang.id = '';
-            this.Barang.kode = '';
-            this.Barang.namabarang = '';
-            this.Barang.harga = '';
-            this.Barang.stok = '';
-            this.Barang.satuan_id = '';
+        clear() {
+            this.Barang.id = "";
+            this.Barang.kode = "";
+            this.Barang.namabarang = "";
+            this.Barang.harga = "";
+            this.Barang.stok = "";
+            this.Barang.satuan_id = "";
         },
-    }
+    },
 };
 </script>

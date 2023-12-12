@@ -13,16 +13,7 @@ class PenjualanApiController extends Controller
      */
     public function index()
     {
-        return penjualan::all();
-        return detailpenjualan::all();
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return [penjualan::all(), detailpenjualan::all()];
     }
 
     /**
@@ -30,7 +21,8 @@ class PenjualanApiController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $penjualan = new penjualan();
+        $penjualan->fill($request->all())->save();
     }
 
     /**
@@ -38,23 +30,16 @@ class PenjualanApiController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return penjualan::find($id);
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
     {
-        //
+        $penjualan = penjualan::find($id);
+        $penjualan->fill($request->all())->save();
+        return $penjualan;
     }
 
     /**
@@ -62,6 +47,7 @@ class PenjualanApiController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $penjualan = penjualan::find($id);
+        $penjualan->delete();
     }
 }
