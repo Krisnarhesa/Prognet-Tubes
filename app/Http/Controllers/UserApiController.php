@@ -20,7 +20,7 @@ class UserApiController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
