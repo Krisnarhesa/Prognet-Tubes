@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\barang;
-use App\Models\satuanbarang;
 
 class BarangApiController extends Controller
 {
@@ -13,7 +12,7 @@ class BarangApiController extends Controller
      */
     public function index()
     {
-        return [barang::all(), satuanbarang::all()];
+        return barang::all();
     }
 
     /**

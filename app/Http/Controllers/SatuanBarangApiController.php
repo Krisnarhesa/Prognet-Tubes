@@ -3,16 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\penjualan;
+use App\Models\satuanbarang;
 
-class PenjualanApiController extends Controller
+class SatuanBarangApiController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return penjualan::all();
+        return satuansatuanbarang::all();
     }
 
     /**
@@ -20,8 +20,8 @@ class PenjualanApiController extends Controller
      */
     public function store(Request $request)
     {
-        $penjualan = new penjualan();
-        $penjualan->fill($request->all())->save();
+        $satuanbarang = new satuanbarang();
+        $satuanbarang->fill($request->all())->save();
     }
 
     /**
@@ -29,16 +29,16 @@ class PenjualanApiController extends Controller
      */
     public function show(string $id)
     {
-        return penjualan::find($id);
+        return satuanbarang::find($id);
     }
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
     {
-        $penjualan = penjualan::find($id);
-        $penjualan->fill($request->all())->save();
-        return $penjualan;
+        $satuanbarang = satuanbarang::find($id);
+        $satuanbarang->fill($request->all())->save();
+        return $satuanbarang;
     }
 
     /**
@@ -46,7 +46,7 @@ class PenjualanApiController extends Controller
      */
     public function destroy(string $id)
     {
-        $penjualan = penjualan::find($id);
-        $penjualan->delete();
+        $satuanbarang = satuanbarang::find($id);
+        $satuanbarang->delete();
     }
 }
