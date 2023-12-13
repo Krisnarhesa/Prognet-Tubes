@@ -60,7 +60,7 @@ export default {
                     this.clear();
                 });
             } else {
-                var url = `http://127.0.0.1t:8000/api/barang/${this.Barang.id}`;
+                var url = `http://127.0.0.1:8000/api/barang/${this.Barang.id}`;
                 axios.put(url, this.Barang).then(() => {
                     console.log("Data Berhasil Diedit");
                     this.loadAllBarang();

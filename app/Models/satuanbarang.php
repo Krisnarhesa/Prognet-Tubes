@@ -9,10 +9,6 @@ class satuanbarang extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'kode',
-        'namabarang',
-        'harga',
-        'stok',
-        'satuan_id',
+        'satuan',
     ];
 }

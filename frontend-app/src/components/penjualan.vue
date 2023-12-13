@@ -59,7 +59,7 @@ export default {
                     this.clear();
                 });
             } else {
-                var url = `http://127.0.0.1t:8000/api/Penjualan/${this.Penjualan.id}`;
+                var url = `http://127.0.0.1:8000/api/Penjualan/${this.Penjualan.id}`;
                 axios.put(url, this.Penjualan).then(() => {
                     console.log('Data Berhasil Diedit');
                     this.loadAllPenjualan();

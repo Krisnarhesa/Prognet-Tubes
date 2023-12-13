@@ -8,7 +8,7 @@ use App\Models\user;
 
 class UserApiController extends Controller
 {
-     public function login(Request $request)
+    public function login(Request $request)
     {
         $credentials = [
             'email' => $request->email,
