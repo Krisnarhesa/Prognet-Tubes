@@ -12,7 +12,7 @@ class SatuanBarangApiController extends Controller
      */
     public function index()
     {
-        return satuansatuanbarang::all();
+        return satuanbarang::all();
     }
 
     /**

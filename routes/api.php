@@ -3,7 +3,9 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BarangApiController;
+use App\Http\Controllers\SatuanBarangApiController;
 use App\Http\Controllers\PenjualanApiController;
+use App\Http\Controllers\DetailPenjualanApiController;
 use App\Http\Controllers\UserApiController;
 
 /*
@@ -71,10 +73,10 @@ Route::apiResource('penjualan', PenjualanApiController::class);
 Route::apiResource('user', UserApiController::class);
 
 // SatuanBarang Resource
-Route::apiResource('satuanbarang', BarangApiController::class);
+Route::apiResource('satuanbarang', SatuanBarangApiController::class);
 
 // DetailPenjualan Resource
-Route::apiResource('detailpenjualan', PenjualanApiController::class);
+Route::apiResource('detailpenjualan', DetailPenjualanApiController::class);
 
 Route::post('login', [UserApiController::class, 'login']);
 Route::post('register', [UserApiController::class, 'register']);
