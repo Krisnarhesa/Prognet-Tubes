@@ -17,9 +17,9 @@ use App\Http\Controllers\UserApiController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
 // Route::get('/Barang', [BarangApiController::class, 'create'])->name('Create Barang');
 // Route::post('/AddBarang', [BarangApiController::class, 'store'])->name('Store Barang');
@@ -75,3 +75,7 @@ Route::apiResource('satuanbarang', BarangApiController::class);
 
 // DetailPenjualan Resource
 Route::apiResource('detailpenjualan', PenjualanApiController::class);
+
+Route::post('login', [UserApiController::class, 'login']);
+Route::post('register', [UserApiController::class, 'register']);
+Route::post('logout', [UserApiController::class, 'logout'])->middleware('auth:sanctum');
