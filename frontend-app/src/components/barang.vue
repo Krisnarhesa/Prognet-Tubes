@@ -10,12 +10,12 @@ export default {
         return {
             allBarang: {},
             Barang: {
-                id: "",
-                kode: "",
-                namabarang: "",
-                harga: "",
-                stok: "",
-                satuan_id: "",
+                'id': "",
+                'kode': "",
+                'namabarang': "",
+                'harga': "",
+                'stok': "",
+                'satuan_id': "",
             },
         };
     },
