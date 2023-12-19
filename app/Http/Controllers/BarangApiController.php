@@ -22,6 +22,12 @@ class BarangApiController extends Controller
     {
         $barang = new barang();
         $barang->fill($request->all())->save();
+
+        
+        return response()->json([
+            'user' => $barang,
+            'message' => 'Success'
+          ], 200);
     }
 
     /**
