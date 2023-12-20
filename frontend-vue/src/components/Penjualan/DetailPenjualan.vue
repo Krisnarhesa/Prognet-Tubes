@@ -61,8 +61,8 @@ export default {
         },
         hapusDetailPenjualan(id){
             axios
-            .delete(`${import.meta.env.VITE_API_URL}/penjualan/${id}`)
-            .then(() => {this.tampilPenjualan()});
+            .delete(`${import.meta.env.VITE_API_URL}/detailpenjualan/${id}`)
+            .then(() => {this.tampilDetailPenjualan(); this.tampilBarang});
         },
         formatCurrency(num){
             let idrCurrency = new Intl.NumberFormat('id-ID', {
