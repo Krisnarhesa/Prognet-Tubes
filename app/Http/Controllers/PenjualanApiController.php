@@ -10,9 +10,15 @@ class PenjualanApiController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return penjualan::all();
+        
+        $penjualanId = $request->input('id', null);
+
+        $query = $penjualanId ? penjualan::where('id', $penjualanId) : penjualan::query();
+    
+        return $query->get();
+        //return penjualan::all();
     }
 
     /**
@@ -22,6 +28,11 @@ class PenjualanApiController extends Controller
     {
         $penjualan = new penjualan();
         $penjualan->fill($request->all())->save();
+
+        return response()->json([
+            'id' => $penjualan->id, 
+            'message' => 'Success'
+        ], 200);
     }
 
     /**

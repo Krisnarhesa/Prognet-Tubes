@@ -160,14 +160,14 @@ export default {
                         {{ ++key }}
                     </td>
                     <td class="p-4">
-                        <a href="" class="w-full">
+                        <router-link :to="'/penjualan/detail/' + penjualan.id" class="w-full">
                             <span class="w-full hover:bg-blue-200 bg-blue-100 text-blue-800 text-md font-medium inline-flex gap-2 items-center justify-center px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-blue-400 border border-blue-400">
                                 {{ penjualan.nomortransaksi }}
                                 <svg class="w-2 h-2 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
                                 </svg>
                             </span>                        
-                        </a>
+                        </router-link>
                     </td>
                     <th scope="row" class="px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
                         <div class="ps-3">
@@ -191,7 +191,7 @@ export default {
                     <td class="px-6 py-4 gap-3 flex">
                         <!-- Modal toggle -->
                         <!-- <a href="#" type="button" @click="dataPenjualan.penjualan = penjualan.id" data-modal-target="editPenjualanModal" data-modal-show="editPenjualanModal" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a> -->
-                        <router-link :to="'/penjualan/edit/' + penjualan.id" type="button" data-modal-target="editPenjualanModal" data-modal-show="editPenjualanModal" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</router-link>
+                        <router-link :to="'/penjualan/detail/' + penjualan.id" type="button"  class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Detail</router-link>
                         <button @click="hapusPenjualan(penjualan.id)" class="font-medium text-red-600 dark:text-red-500 hover:underline">Hapus</button>
                     </td>
                 </tr>

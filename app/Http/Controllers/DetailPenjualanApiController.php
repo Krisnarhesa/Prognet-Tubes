@@ -10,9 +10,15 @@ class DetailPenjualanApiController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return detailpenjualan::all();
+
+        $penjualanId = $request->input('penjualan_id', null);
+
+        $query = $penjualanId ? detailpenjualan::where('penjualan_id', $penjualanId) : detailpenjualan::query();
+    
+        return $query->get();
+        //return detailpenjualan::all();
     }
 
     /**
@@ -21,7 +27,14 @@ class DetailPenjualanApiController extends Controller
     public function store(Request $request)
     {
         $detailpenjualan = new detailpenjualan();
+        //dd($request->all());
         $detailpenjualan->fill($request->all())->save();
+
+        
+        return response()->json([
+            'data' => $detailpenjualan,
+            'message' => 'Success'
+          ], 200);
     }
 
     /**

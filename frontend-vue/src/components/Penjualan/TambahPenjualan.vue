@@ -4,45 +4,26 @@
     export default {
         data(){
             return{
-                daftarSatuan: [],
                 dataPenjualan:{
                     nomortransaksi :'',
-                    totalharga: '',
-                    user_id: this.currentUser.id,
+                    totalharga: 0,
+                    user_id: '1',
                 },
-                currentUser:{
-                    id: '1',
-                },
+                currentUserId: 1,
                 idUrl : this.$route.params.id,
             }
         },
         mounted(){
             let id = this.$route.params.id;
-            this.tampilBarang(id);
-            this.tampilSatuan();
         },
         methods: {
-            async tampilBarang(id_url){
-                const response = await axios.get(`${import.meta.env.VITE_API_URL}/barang/${id_url}`);
-                this.dataBarang = response.data;
-                console.log(this.dataBarang);
-            },
-            async tampilSatuan(){
-                const response = await axios.get(`${import.meta.env.VITE_API_URL}/satuanbarang`);
-                this.daftarSatuan = response.data;
-                console.log(this.daftarSatuan);
-            },
-            editBarang(id){
-                axios
-                .put(`${import.meta.env.VITE_API_URL}/barang/${id}`, 
-                this.dataBarang)
-                .then(() => {this.$router.push({ path: '/barang/daftar' })});
-            },
             tambahPenjualan(){
                 axios
-                .post(`${import.meta.env.VITE_API_URL}/penjualan`, 
-                this.dataBarang)
-                .then((response) => {this.$router.push({ path: '/penjualan/daftar' })});
+                .post(`${import.meta.env.VITE_API_URL}/penjualan`, this.dataPenjualan)
+                .then((response) => {
+                    const newPenjualanId = response.data.id;
+                    this.$router.push({ path: `/penjualan/detail/${newPenjualanId}`
+                 })});
             }
         }
     }
@@ -86,33 +67,17 @@
         
         <div class="max-w-lg mx-auto py-2 px-8 border border-gray-200 rounded-xl">
             <div class="py-4 mb-5">
-                <h3 class="text-2xl font-semibold text-blue-500">Tambah Penjualan</h3>
+                <h3 class="text-2xl font-semibold text-blue-500">Tambah Transaksi</h3>
             </div>
 
-            <form @submit.prevent="editBarang(this.idUrl)" >
+            <form @submit.prevent="tambahPenjualan" >
                 <div class="relative z-0 w-full mb-5 group">
-                    <input type="text" v-model="dataBarang.kode" id="kode_barang" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                    <label for="kode_barang" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Kode Barang</label>
+                    <input type="text" v-model="dataPenjualan.nomortransaksi" id="nomor_transaksi" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                    <label for="nomor_transaksi" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Nomor Transaksi</label>
                 </div>
-                <div class="relative z-0 w-full mb-5 group">
-                    <input type="text" v-model="dataBarang.namabarang" id="nama_barang" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                    <label for="nama_barang" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Nama Barang</label>
-                </div>
-                <div class="relative z-0 w-full mb-5 group">
-                    <input type="text" v-model="dataBarang.harga" id="harga_barang" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                    <label for="harga_barang" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Harga Barang</label>
-                </div>
-                <div class="relative z-0 w-full mb-5 group">
-                    <input type="text" v-model="dataBarang.stok" id="stok_barang" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                    <label for="stok_barang" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Stok Barang</label>
-                </div>
-                <div class="relative z-0 w-full mb-5 group">                
-                    <label for="satuan_barang" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select an option</label>
-                    <select id="satuan_barang" v-model="dataBarang.satuan_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                        <option selected>Pilih satuan</option>
-                        <option v-for="(satuan, key) in daftarSatuan" :value="satuan.id">{{ satuan.satuan }}</option>
-                    </select>
-                </div>
+
+                <input type="hidden" v-model="dataPenjualan.user_id" id="nomor_transaksi" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+
 
                 <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
             </form>
