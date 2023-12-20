@@ -1,5 +1,6 @@
 /.phpunit.cache
 /node_modules
+frontend-vue/node_modules
 /public/build
 /public/hot
 /public/storage
@@ -7,7 +8,7 @@
 /vendor
 .env
 .env.backup
-.env.production
+.env.production 
 .phpunit.result.cache
 Homestead.json
 Homestead.yaml

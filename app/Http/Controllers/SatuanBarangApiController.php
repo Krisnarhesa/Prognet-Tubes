@@ -22,6 +22,11 @@ class SatuanBarangApiController extends Controller
     {
         $satuanbarang = new satuanbarang();
         $satuanbarang->fill($request->all())->save();
+
+        return response()->json([
+            'user' => $satuanbarang,
+            'message' => 'Success'
+          ], 200);
     }
 
     /**
