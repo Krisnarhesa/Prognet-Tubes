@@ -9,6 +9,9 @@ import TambahPenjualan from "../components/Penjualan/TambahPenjualan.vue";
 import DetailPenjualan from "../components/Penjualan/DetailPenjualan.vue";
 import EditPenjualan from "../components/Penjualan/EditPenjualan.vue";
 
+import TambahDetailPenjualan from "../components/Penjualan/TambahDetailPenjualan.vue";
+import EditDetailPenjualan from "../components/Penjualan/EditDetailPenjualan.vue";
+
 import DaftarBarang from "../components/Barang/DaftarBarang.vue";
 import TambahBarang from "../components/Barang/TambahBarang.vue";
 import EditBarang from "../components/Barang/EditBarang.vue";
@@ -25,6 +28,10 @@ const routes = [
     { path: "/penjualan/tambah", component: TambahPenjualan  },
     { path: "/penjualan/detail/:id", component: DetailPenjualan  },
     { path: "/penjualan/edit/:id", component: EditPenjualan  },
+
+    
+    { path: "/detail-penjualan/tambah", component: TambahPenjualan  },
+    { path: "/detail-penjualan/edit/:id", component: EditPenjualan  },
     
     { path: "/barang/daftar", component: DaftarBarang  },
     { path: "/barang/tambah", component: TambahBarang  },
