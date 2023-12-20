@@ -249,7 +249,7 @@ export default {
                     <td class="px-6 py-4 gap-3 flex">
                         <!-- Modal toggle -->
                         <!-- <a href="#" type="button" @click="dataPenjualan.detailP = detailP.id" data-modal-target="editPenjualanModal" data-modal-show="editPenjualanModal" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a> -->
-                        <router-link :to="'/detail-penjualan/edit/' + detailP.id" type="button"  class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</router-link>
+                        <router-link :to="'/detail-penjualan/edit/' + this.$route.params.id + '/' + detailP.id" type="button"  class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</router-link>
                         <button @click="hapusDetailPenjualan(detailP.id)" class="font-medium text-red-600 dark:text-red-500 hover:underline">Hapus</button>
                     </td>
                 </tr>

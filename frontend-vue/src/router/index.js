@@ -31,7 +31,7 @@ const routes = [
 
     
     { path: "/detail-penjualan/tambah/:penjualan_id", component: TambahDetailPenjualan  },
-    { path: "/detail-penjualan/edit/:id", component: EditDetailPenjualan  },
+    { path: "/detail-penjualan/edit/:penjualan_id/:id", component: EditDetailPenjualan  },
     
     { path: "/barang/daftar", component: DaftarBarang  },
     { path: "/barang/tambah", component: TambahBarang  },
