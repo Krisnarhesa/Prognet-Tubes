@@ -22,6 +22,11 @@ class PenjualanApiController extends Controller
     {
         $penjualan = new penjualan();
         $penjualan->fill($request->all())->save();
+
+        return response()->json([
+            'id' => $penjualan->id, 
+            'message' => 'Success'
+        ], 200);
     }
 
     /**

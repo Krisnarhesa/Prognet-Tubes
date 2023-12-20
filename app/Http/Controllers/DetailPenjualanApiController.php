@@ -10,9 +10,15 @@ class DetailPenjualanApiController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return detailpenjualan::all();
+
+        $penjualanId = $request->input('penjualan_id');
+
+        $query = $penjualanId ? detailpenjualan::where('penjualan_id', $penjualanId) : detailpenjualan::all();
+    
+        return $query->get();
+        //return detailpenjualan::all();
     }
 
     /**
