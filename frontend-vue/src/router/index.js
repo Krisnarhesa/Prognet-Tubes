@@ -30,8 +30,8 @@ const routes = [
     { path: "/penjualan/edit/:id", component: EditPenjualan  },
 
     
-    { path: "/detail-penjualan/tambah", component: TambahPenjualan  },
-    { path: "/detail-penjualan/edit/:id", component: EditPenjualan  },
+    { path: "/detail-penjualan/tambah/:penjualan_id", component: TambahDetailPenjualan  },
+    { path: "/detail-penjualan/edit/:id", component: EditDetailPenjualan  },
     
     { path: "/barang/daftar", component: DaftarBarang  },
     { path: "/barang/tambah", component: TambahBarang  },
