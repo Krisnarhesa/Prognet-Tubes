@@ -17,13 +17,13 @@
         methods: {
             async tampilSatuan(){
                 let id = this.$route.params.id;
-                const response = await axios.get(`${import.meta.env.VITE_API_URL}/satuanbarang/${id}`);
+                const response = await axios.get(`https://api-group9-prognet.manpits.xyz/api/satuanbarang/${id}`);
                 this.dataSatuan = response.data;
                 console.log(this.daftarSatuan);
             },
             editSatuan(id){
                 axios
-                .put(`${import.meta.env.VITE_API_URL}/satuanbarang/${id}`, 
+                .put(`https://api-group9-prognet.manpits.xyz/api/satuanbarang/${id}`, 
                 this.dataSatuan)
                 .then(() => {this.$router.push({ path: '/satuan/daftar' })});
             }

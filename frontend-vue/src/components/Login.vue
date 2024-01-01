@@ -11,7 +11,7 @@ import { useRouter } from 'vue-router';
 
 const handleLogin = async () => {
   try {
-    const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/login`, {
+    const { data } = await axios.post(`https://api-group9-prognet.manpits.xyz/api/login`, {
       email: form.value.email,
       password: form.value.password
     });

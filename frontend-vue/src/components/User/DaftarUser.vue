@@ -20,19 +20,19 @@ export default {
     },
     methods: {
         async tampilUser(){
-            const response = await axios.get(`${import.meta.env.VITE_API_URL}/user`);
+            const response = await axios.get(`https://api-group9-prognet.manpits.xyz/api/user`);
             this.daftarUser = response.data;
             console.log(this.daftarUser);
         },
         editUser(id){
             axios
-            .put(`${import.meta.env.VITE_API_URL}/user/${id}`,
+            .put(`https://api-group9-prognet.manpits.xyz/api/user/${id}`,
             this.dataUser)
             .then(() => {this.$router.push({ path: '/user/daftar' })});
         },
         hapusUser(id){
             axios
-            .delete(`${import.meta.env.VITE_API_URL}/user/${id}`)
+            .delete(`https://api-group9-prognet.manpits.xyz/api/user/${id}`)
             .then(() => {this.tampilUser()});
         }
     }

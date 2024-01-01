@@ -17,7 +17,7 @@
         },
         methods: {
             async tampilBarang(){
-                const response = await axios.get(`${import.meta.env.VITE_API_URL}/barang`);
+                const response = await axios.get(`https://api-group9-prognet.manpits.xyz/api/barang`);
                 this.daftarBarang = response.data;
                 console.log(this.daftarBarang);
             },
@@ -27,7 +27,7 @@
                 console.log(this.dataDetailPenjualan)
 
                 axios
-                .post(`${import.meta.env.VITE_API_URL}/detailpenjualan`, 
+                .post(`https://api-group9-prognet.manpits.xyz/api/detailpenjualan`, 
                 this.dataDetailPenjualan)
                 .then((response) => {this.$router.push({ path: `/penjualan/detail/${this.dataDetailPenjualan.penjualan_id}` })});
             },

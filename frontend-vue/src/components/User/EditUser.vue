@@ -18,13 +18,13 @@
         methods: {
             async tampilUser(){
                 let id = this.$route.params.id;
-                const response = await axios.get(`${import.meta.env.VITE_API_URL}/user/${id}`);
+                const response = await axios.get(`https://api-group9-prognet.manpits.xyz/api/user/${id}`);
                 this.dataUser = response.data;
                 console.log(this.daftarUser);
             },
             editUser(id){
                 axios
-                .put(`${import.meta.env.VITE_API_URL}/user/${id}`,
+                .put(`https://api-group9-prognet.manpits.xyz/api/user/${id}`,
                 this.dataUser)
                 .then(() => {this.$router.push({ path: '/user/daftar' })});
             }

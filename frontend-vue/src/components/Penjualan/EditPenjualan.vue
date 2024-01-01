@@ -23,7 +23,7 @@ export default {
     },
     methods: {
         async tampilDetailPenjualan(detail_id){
-            const response = await axios.get(`${import.meta.env.VITE_API_URL}/detailpenjualan`, {
+            const response = await axios.get(`https://api-group9-prognet.manpits.xyz/api/detailpenjualan`, {
                 
                 params: {
                     penjualan_id: detail_id,
@@ -34,7 +34,7 @@ export default {
             //console.log(this.daftarDetailPenjualan);
         },
         async tampilUser(){
-            const response = await axios.get(`${import.meta.env.VITE_API_URL}/barang`);
+            const response = await axios.get(`https://api-group9-prognet.manpits.xyz/api/barang`);
             this.daftarBarang = response.data;
             //console.log(this.dataUser);
 
@@ -42,7 +42,7 @@ export default {
         },
         hapusDetailPenjualan(id){
             axios
-            .delete(`${import.meta.env.VITE_API_URL}/penjualan/${id}`)
+            .delete(`https://api-group9-prognet.manpits.xyz/api/penjualan/${id}`)
             .then(() => {this.tampilPenjualan()});
         },
         formatCurrency(num){

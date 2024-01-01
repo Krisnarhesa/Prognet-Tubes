@@ -27,7 +27,7 @@ export default {
     },
     methods: {
         async tampilDetailPenjualan(detail_id){
-            const response = await axios.get(`${import.meta.env.VITE_API_URL}/detailpenjualan`, {
+            const response = await axios.get(`https://api-group9-prognet.manpits.xyz/api/detailpenjualan`, {
                 
                 params: {
                     penjualan_id: detail_id,
@@ -38,7 +38,7 @@ export default {
             //console.log(this.daftarDetailPenjualan);
         },
         async tampilPenjualan(id_p){
-            const response = await axios.get(`${import.meta.env.VITE_API_URL}/penjualan/${id_p}`,{
+            const response = await axios.get(`https://api-group9-prognet.manpits.xyz/api/penjualan/${id_p}`,{
                 params: {
                     id: id_p
                 }
@@ -48,7 +48,7 @@ export default {
             //console.log(this.daftarPenjualan);
         },
         async tampilBarang(id_p){
-            const response = await axios.get(`${import.meta.env.VITE_API_URL}/barang`);
+            const response = await axios.get(`https://api-group9-prognet.manpits.xyz/api/barang`);
             this.daftarBarang = response.data;
 
             
@@ -61,7 +61,7 @@ export default {
         },
         hapusDetailPenjualan(id){
             axios
-            .delete(`${import.meta.env.VITE_API_URL}/detailpenjualan/${id}`)
+            .delete(`https://api-group9-prognet.manpits.xyz/api/detailpenjualan/${id}`)
             .then(() => {this.tampilDetailPenjualan(); this.tampilBarang});
         },
         formatCurrency(num){
@@ -93,7 +93,7 @@ export default {
 
             
             axios
-                .put(`${import.meta.env.VITE_API_URL}/penjualan/${id_p}`, 
+                .put(`https://api-group9-prognet.manpits.xyz/api/penjualan/${id_p}`, 
                 this.daftarPenjualan)
                 .then(() => {});
 

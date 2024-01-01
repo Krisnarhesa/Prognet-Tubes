@@ -15,7 +15,7 @@ const form = ref({
 const handleRegister = async () => {
     try {
         const response = await axios.post(
-            `${import.meta.env.VITE_API_URL}/register`,
+            `https://api-group9-prognet.manpits.xyz/api/register`,
             {
                 name: form.value.name,
                 email: form.value.email,
