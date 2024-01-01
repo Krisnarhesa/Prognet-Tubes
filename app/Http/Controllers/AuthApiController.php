@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\user;
+use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 
@@ -28,7 +28,7 @@ class AuthApiController extends Controller
 
         $input = $request->all();
         $input['password'] = bcrypt($input['password']);
-        $user = user::create($input);
+        $user = User::create($input);
 
         $success['token'] = $user->createToken('auth_token')->plainTextToken;
         $success['name'] = $user->name;

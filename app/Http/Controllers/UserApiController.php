@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\user;
+use App\Models\User;
 
 
 class UserApiController extends Controller
@@ -13,18 +13,18 @@ class UserApiController extends Controller
      */
     public function index()
     {
-        return user::all();
+        return User::all();
     }
 
     public function update(Request $request, string $id)
     {
-        $user = user::find($id);
+        $user = User::find($id);
         $user->fill($request->all())->save();
         return $user;
     }
     public function store(Request $request)
     {
-        $user = new user();
+        $user = new User();
         $user->fill($request->all())->save();
 
         return response()->json([
@@ -38,14 +38,14 @@ class UserApiController extends Controller
      */
     public function show(string $id)
     {
-        return user::find($id);
+        return User::find($id);
     }
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
-        $user = user::find($id);
+        $user = User::find($id);
         $user->delete();
     }
 }
