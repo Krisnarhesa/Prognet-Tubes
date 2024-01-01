@@ -17,7 +17,7 @@ const handleLogin = async () => {
     });
 
     localStorage.setItem('token', data.data.token);
-    localStorage.setItem('user', data.data);
+    localStorage.setItem('user', JSON.stringify(data.data));
 
     window.location.href = '/';
   } catch (error) {
