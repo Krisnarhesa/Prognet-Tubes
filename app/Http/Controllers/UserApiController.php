@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\User;
+use App\Models\user;
 
 
 class UserApiController extends Controller
@@ -26,6 +26,11 @@ class UserApiController extends Controller
     {
         $user = new user();
         $user->fill($request->all())->save();
+
+        return response()->json([
+            'user' => $user,
+            'message' => 'Success'
+          ], 200);
     }
 
     /**
