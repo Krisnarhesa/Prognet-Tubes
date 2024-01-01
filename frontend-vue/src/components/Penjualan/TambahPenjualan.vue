@@ -3,26 +3,25 @@
 
     export default {
         data(){
+            const user = JSON.parse(localStorage.getItem('user'));
             return{
                 dataPenjualan:{
                     nomortransaksi :'',
                     totalharga: 0,
-                    user_id: '1',
+                    user_id: user.id ?? null,
                 },
-                currentUserId: 1,
                 idUrl : this.$route.params.id,
             }
         },
         mounted(){
-            let id = this.$route.params.id;
         },
         methods: {
             tambahPenjualan(){
                 axios
-                .post(`https://api-group9-prognet.manpits.xyz/api/penjualan`, this.dataPenjualan)
+                .post(https://api-group9-prognet.manpits.xyz/api/penjualan, this.dataPenjualan)
                 .then((response) => {
                     const newPenjualanId = response.data.id;
-                    this.$router.push({ path: `/penjualan/detail/${newPenjualanId}`
+                    this.$router.push({ path: /penjualan/detail/${newPenjualanId}
                  })});
             }
         }
