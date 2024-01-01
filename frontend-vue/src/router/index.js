@@ -81,12 +81,12 @@ router.beforeEach((to, from, next) => {
     const requiresAuth = to.matched.some((x) => x.meta.auth);
  
     if (requiresAuth && !localStorage.getItem("token")) {
-        window.location.href = "/login";
+        router.push({ path: '/login' })
         return;
     }
  
     if (localStorage.getItem("token") && ['/login', '/register'].includes(to.path)) {
-        window.location.href = "/";
+        router.push({ path: '/' })
         return;
     }
  

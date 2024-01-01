@@ -12,7 +12,7 @@ onMounted(() => {
 const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
-    window.location.href = "/login";
+    this.$router.push({ path: '/login' })
 };
 </script>
 
