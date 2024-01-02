@@ -19,13 +19,13 @@ export default {
     },
     methods: {
         async tampilBarang(){
-            const response = await axios.get(`${import.meta.env.VITE_API_URL}/barang`);
+            const response = await axios.get(`https://api-group9-prognet.manpits.xyz/api/barang`);
             this.daftarBarang = response.data;
             console.log(this.daftarBarang);
         },
         hapusBarang(id){
             axios
-            .delete(`${import.meta.env.VITE_API_URL}/barang/${id}`)
+            .delete(`https://api-group9-prognet.manpits.xyz/api/barang/${id}`)
             .then(() => {this.tampilBarang()});
         },
         formatCurrency(num){
@@ -37,7 +37,7 @@ export default {
             return idrCurrency.format(num);
         },
         async tampilSatuan(){
-            const response = await axios.get(`${import.meta.env.VITE_API_URL}/satuanbarang`);
+            const response = await axios.get(`https://api-group9-prognet.manpits.xyz/api/satuanbarang`);
             this.daftarSatuan = response.data;
             //console.log(this.daftarSatuan);
         },

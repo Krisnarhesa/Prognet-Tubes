@@ -11,12 +11,15 @@ import { useRouter } from 'vue-router';
 
 const handleLogin = async () => {
   try {
-    const response = await axios.post(`${import.meta.env.VITE_API_URL}/login`, {
+    const { data } = await axios.post(`https://api-group9-prognet.manpits.xyz/api/login`, {
       email: form.value.email,
       password: form.value.password
     });
 
-    router.push('/');
+    localStorage.setItem('token', data.data.token);
+    localStorage.setItem('user', JSON.stringify(data.data));
+
+    router.push({ path: '/' })
   } catch (error) {
     // Handle the error, e.g., show a message to the user or log the error
     console.error('Login failed:', error);

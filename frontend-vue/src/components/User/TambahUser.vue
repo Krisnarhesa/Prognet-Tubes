@@ -17,7 +17,7 @@
         methods: {
             tambahUser(){
                 axios
-                .post(`${import.meta.env.VITE_API_URL}/user`,
+                .post(`https://api-group9-prognet.manpits.xyz/api/user`,
                 this.dataUser)
                 .then((response) => {this.$router.push({ path: '/user/daftar' })});
             }

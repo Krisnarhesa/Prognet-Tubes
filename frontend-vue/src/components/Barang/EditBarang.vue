@@ -22,18 +22,18 @@
         },
         methods: {
             async tampilBarang(id_url){
-                const response = await axios.get(`${import.meta.env.VITE_API_URL}/barang/${id_url}`);
+                const response = await axios.get(`https://api-group9-prognet.manpits.xyz/api/barang/${id_url}`);
                 this.dataBarang = response.data;
                 console.log(this.dataBarang);
             },
             async tampilSatuan(){
-                const response = await axios.get(`${import.meta.env.VITE_API_URL}/satuanbarang`);
+                const response = await axios.get(`https://api-group9-prognet.manpits.xyz/api/satuanbarang`);
                 this.daftarSatuan = response.data;
                 console.log(this.daftarSatuan);
             },
             editBarang(id){
                 axios
-                .put(`${import.meta.env.VITE_API_URL}/barang/${id}`, 
+                .put(`https://api-group9-prognet.manpits.xyz/api/barang/${id}`, 
                 this.dataBarang)
                 .then(() => {this.$router.push({ path: '/barang/daftar' })});
             }

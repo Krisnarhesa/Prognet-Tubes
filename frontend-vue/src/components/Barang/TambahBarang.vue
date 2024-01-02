@@ -19,13 +19,13 @@
         },
         methods: {
             async tampilSatuan(){
-                const response = await axios.get(`${import.meta.env.VITE_API_URL}/satuanbarang`);
+                const response = await axios.get(`https://api-group9-prognet.manpits.xyz/api/satuanbarang`);
                 this.daftarSatuan = response.data;
                 console.log(this.daftarSatuan);
             },
             tambahBarang(){
                 axios
-                .post(`${import.meta.env.VITE_API_URL}/barang`, 
+                .post(`https://api-group9-prognet.manpits.xyz/api/barang`, 
                 this.dataBarang)
                 .then((response) => {this.$router.push({ path: '/barang/daftar' })});
             }

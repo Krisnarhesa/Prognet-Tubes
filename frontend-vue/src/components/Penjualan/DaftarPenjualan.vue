@@ -19,12 +19,12 @@ export default {
     },
     methods: {
         async tampilPenjualan(){
-            const response = await axios.get(`${import.meta.env.VITE_API_URL}/penjualan`);
+            const response = await axios.get(`https://api-group9-prognet.manpits.xyz/api/penjualan`);
             this.daftarPenjualan = response.data;
             console.log(this.daftarPenjualan);
         },
         async tampilUser(){
-            const response = await axios.get(`${import.meta.env.VITE_API_URL}/user`);
+            const response = await axios.get(`https://api-group9-prognet.manpits.xyz/api/user`);
             this.daftarUser = response.data;
             //console.log(this.dataUser);
 
@@ -32,7 +32,7 @@ export default {
         },
         hapusPenjualan(id){
             axios
-            .delete(`${import.meta.env.VITE_API_URL}/penjualan/${id}`)
+            .delete(`https://api-group9-prognet.manpits.xyz/api/penjualan/${id}`)
             .then(() => {this.tampilPenjualan()});
         },
         formatCurrency(num){

@@ -12,7 +12,7 @@
         methods: {
             tambahSatuan(){
                 axios
-                .post(`${import.meta.env.VITE_API_URL}/satuanbarang`, 
+                .post(`https://api-group9-prognet.manpits.xyz/api/satuanbarang`, 
                 this.dataSatuan)
                 .then((response) => {this.$router.push({ path: '/satuan/daftar' })});
             }
