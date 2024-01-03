@@ -24,6 +24,14 @@
             tambalDetailPenjualan(){
                 this.dataDetailPenjualan.penjualan_id = this.$route.params.penjualan_id;
 
+                // Validasi kuantitas (harus angka)
+                if (!/^\d+$/.test(this.dataDetailPenjualan.kuantitas)) {
+                    this.kuantitasError = 'Masukkan Angka dengan benar';
+                    return;
+                } else {
+                    this.kuantitasError = null; // Reset pesan kesalahan
+                }
+
                 console.log(this.dataDetailPenjualan)
 
                 axios
@@ -97,8 +105,13 @@
                     </select>
                 </div>
                 <div class="relative z-0 w-full mb-5 group">
-                    <input type="text" v-model="dataDetailPenjualan.kuantitas" id="kuantitas_barang" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                    <input type="text" v-model="dataDetailPenjualan.kuantitas" id="kuantitas_barang" 
+                           :class="{ 'border-red-500': kuantitasError }"
+                           class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" 
+                           placeholder=" " 
+                           required />
                     <label for="kuantitas_barang" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Kuantitas Barang</label>
+                    <div v-if="kuantitasError" class="text-red-500 text-sm mt-2">{{ kuantitasError }}</div>
                 </div>
                 <input type="hidden" v-model="dataDetailPenjualan.penjualan_id">
 
