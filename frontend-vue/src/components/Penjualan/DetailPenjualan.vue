@@ -14,7 +14,8 @@ export default {
             },
             daftarBarang: [],
             daftarPenjualan: {
-                totalharga: ''
+                totalharga: '',
+                nomortransaksi: '',
             },
         }
     },
@@ -157,7 +158,7 @@ export default {
         
         <div class="py-5 flex items-center gap-2">
             <h3 class="text-xl">Nomor Transaksi : </h3>
-            <h3 class="text-xl text-blue-500 font-semibold" >{{ this.$route.params.id }}</h3>
+            <h3 class="text-xl text-blue-500 font-semibold" >{{ daftarPenjualan.nomortransaksi }}</h3>
         </div>
 
         
@@ -191,13 +192,13 @@ export default {
                         Nama Barang
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        Harga Barang
+                        Harga Satuan Barang
                     </th>
                     <th scope="col" class="px-6 py-3">
                         Jumlah
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        Total
+                        Subtotal
                     </th>
                     <th scope="col" class="px-6 py-3">
                         Date Created

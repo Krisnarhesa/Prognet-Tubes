@@ -14,14 +14,26 @@
             }
         },
         mounted(){
+            this.tambahPenjualan();
         },
         methods: {
             tambahPenjualan(){
+                const date = new Date();
+
+                let day = date.getDate();
+                let month = date.getMonth() + 1;
+                let year = date.getFullYear();
+                let datenow = Date.now();
+
+                let currentDateCode = `${day}-${month}-${year}-${datenow}`;
+
+                this.dataPenjualan.nomortransaksi = currentDateCode;
+                
                 axios
-                .post(https://api-group9-prognet.manpits.xyz/api/penjualan, this.dataPenjualan)
+                .post("https://api-group9-prognet.manpits.xyz/api/penjualan", this.dataPenjualan)
                 .then((response) => {
                     const newPenjualanId = response.data.id;
-                    this.$router.push({ path: /penjualan/detail/${newPenjualanId}
+                    this.$router.push({ path: `/penjualan/detail/${newPenjualanId}`
                  })});
             }
         }

@@ -13,15 +13,27 @@ export default {
                 email: '',
             },
             daftarBarang: [],
+            daftarPenjualan: [],
         }
     },
     mounted() {   
         let id = this.$route.params.id;
 
         this.tampilDetailPenjualan(id);
+        this.tampilPenjualan(id);
         this.tampilUser();
     },
     methods: {
+        async tampilPenjualan(id_p){
+            const response = await axios.get(`https://api-group9-prognet.manpits.xyz/api/penjualan/${id_p}`,{
+                params: {
+                    id: id_p
+                }
+            });
+            this.daftarPenjualan = response.data;
+            console.log(this.daftarPenjualan)
+            //console.log(this.daftarPenjualan);
+        },
         async tampilDetailPenjualan(detail_id){
             const response = await axios.get(`https://api-group9-prognet.manpits.xyz/api/detailpenjualan`, {
                 
@@ -111,7 +123,7 @@ export default {
         </div>
         <div class="py-5 flex items-center gap-2">
             <h3 class="text-xl">Nomor Transaksi : </h3>
-            <h3 class="text-xl text-blue-500 font-semibold" >{{ this.$route.params.id }}</h3>
+            <h3 class="text-xl text-blue-500 font-semibold" >{{ this.daftarPenjualan[0].nomortransaksi }}</h3>
         </div>
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 overflow-x-auto shadow-md sm:rounded-lg">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
