@@ -9,6 +9,8 @@ import { useRouter } from 'vue-router';
         password: ''
     })
 
+    const loginError = ref(null);
+
 const handleLogin = async () => {
   try {
     const { data } = await axios.post(`https://api-group9-prognet.manpits.xyz/api/login`, {
@@ -24,8 +26,10 @@ const handleLogin = async () => {
   } catch (error) {
     // Handle the error, e.g., show a message to the user or log the error
     console.error('Login failed:', error);
+    loginError.value = 'Login failed. Please recheck your email or password.';
   }
 };
+
 </script>
 
 <template>
@@ -57,6 +61,9 @@ const handleLogin = async () => {
                             <a href="#" class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">Forgot password?</a>
                         </div>
                         <button type="submit" class="w-full text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-primary-800">Sign in</button>
+                            <div v-if="loginError" class="text-red-500">
+                                {{ loginError }}
+                            </div>
                         <p class="text-sm font-light text-gray-500 dark:text-gray-400">
                             Don’t have an account yet? <a href="/register" class="font-medium text-primary-600 hover:underline dark:text-primary-500">Sign up</a>
                         </p>
