@@ -154,19 +154,19 @@ export default {
             }
         },
 
-        filterStok(){
+        filterStok() {
             // Simpan salinan daftar barang asli
             if (!this.originalDaftarBarang) {
                 this.originalDaftarBarang = [...this.daftarBarang];
             }
 
-            const filterRangeStok = this.filterValues.rangeStok.toLowerCase();
+            const filterRangeStok = this.filterValues.rangeStok;
 
             // Filter daftar barang berdasarkan nilai filter
-            let filteredBarang = this.originalDaftarBarang.filter(barang => {
-                const idMatch = barang.stok.toLowerCase().includes(filterRangeStok);
+            let filteredStok = this.originalDaftarBarang.filter(barang => {
+                const stokMatch = (barang.stok >= parseInt(filterRangeStok.split('-')[0]) && barang.stok <= parseInt(filterRangeStok.split('-')[1]));
                 // You can add more filter conditions if needed
-                return idMatch;
+                return stokMatch;
             });
 
             // Jika filter kosong, atur ulang daftar barang dengan daftar barang asli
@@ -174,7 +174,31 @@ export default {
                 this.tampilBarang();
             } else {
                 // Atur ulang daftar barang dengan hasil filter
-                this.daftarBarang = filteredBarang;
+                this.daftarBarang = filteredStok;
+            }
+        },
+
+            filterHarga() {
+            // Simpan salinan daftar barang asli
+            if (!this.originalDaftarBarang) {
+                this.originalDaftarBarang = [...this.daftarBarang];
+            }
+
+            const filterRangeHarga = this.filterValues.rangeHarga;
+
+            // Filter daftar barang berdasarkan nilai filter
+            let filteredHarga = this.originalDaftarBarang.filter(barang => {
+                const hargaMatch = (barang.harga >= parseInt(filterRangeHarga.split('-')[0]) && barang.harga <= parseInt(filterRangeHarga.split('-')[1]));
+                // You can add more filter conditions if needed
+                return hargaMatch;
+            });
+
+            // Jika filter kosong, atur ulang daftar barang dengan daftar barang asli
+            if (!filterRangeHarga) {
+                this.tampilBarang();
+            } else {
+                // Atur ulang daftar barang dengan hasil filter
+                this.daftarBarang = filteredHarga;
             }
         },
         
@@ -368,7 +392,30 @@ export default {
         <input type="text" id="filter-kode-barang" class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search by ID Barang" v-model="filterValues.kodeBarang" @input="filterBarang">
     </div>
     </div>
-        <div class="mb-2">
+    <div class="mb-2">
+        <!-- Filter range harga barang -->
+        <label for="filter-range-harga" class="sr-only">Filter Range Harga Barang</label>
+        <div class="relative">
+            <div class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
+     <svg class="w-[16px] h-[16px] text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 11 20">
+    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1.75 15.363a4.954 4.954 0 0 0 2.638 1.574c2.345.572 4.653-.434 5.155-2.247.502-1.813-1.313-3.79-3.657-4.364-2.344-.574-4.16-2.551-3.658-4.364.502-1.813 2.81-2.818 5.155-2.246A4.97 4.97 0 0 1 10 5.264M6 17.097v1.82m0-17.5v2.138"/>
+  </svg>
+  </div>
+    <select id="filter-range-harga" class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" @change="filterHarga" v-model="filterValues.rangeHarga">
+                <option value="" >Select Harga Range</option>
+                <option value="1-100000">Filter by range harga Rp. 1.000 - Rp. 100.000</option>
+                <option value="100001-500000">Filter by range harga Rp. 100.001 - Rp. 500.000</option>
+                <option value="500001-1000000">Filter by range harga Rp. 500.001 - Rp. 1.000.000</option>
+                <option value="1000001-5000000">Filter by range harga Rp. 1.000.001 - Rp. 5.000.000</option>
+                <option value="5000001-10000000">Filter by range harga Rp. 5.000.001 - Rp. 10.000.000</option>
+                <option value="10000001-50000000">Filter by range harga Rp. 10.000.001 - Rp. 50.000.000</option>
+                <option value="50000001-100000000">Filter by range harga Rp. 50.000.001 - Rp. 100.000.000</option>
+                <option value="100000001-500000000">Filter by range harga Rp. 100.000.001 - Rp. 500.000.000</option>
+                <option value="500000001-100000000000">Filter by range harga Rp. 500.000.001 - Rp. 100.000.000.000</option>
+            </select>
+    </div>
+    </div>
+    <div class="mb-2">
         <!-- Filter range stok -->
         <label for="filter-range-stok" class="sr-only">Filter Range Stok</label>
         <div class="relative">
@@ -379,37 +426,15 @@ export default {
     </div>
     <select id="filter-range-stok" class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" @change="filterStok" v-model="filterValues.rangeStok">
         <option value="" >Select Stok Range</option>
-        <option value="1-25">Filter by stok 1 - 10</option>
-        <option value="25-50">Filter by stok 25 - 25</option>
-        <option value="50-100">Filter by stok 50 - 100</option>
-        <option value="100-200">Filter by stok 100 - 200</option>
-        <option value="200-500">Filter by stok 200 - 500</option>
-        <option value="500-1000">Filter by stok 500 - 1000</option>
-        <option value="1000-2000">Filter by stok 1000 - 2000</option>
+        <option value="1-10">Filter by stok 1 - 10</option>
+        <option value="11-25">Filter by stok 11 - 25</option>
+        <option value="26-50">Filter by stok 26 - 50</option>
+        <option value="51-100">Filter by stok 51 - 100</option>
+        <option value="101-200">Filter by stok 101 - 200</option>
+        <option value="201-500">Filter by stok 201 - 500</option>
+        <option value="501-1000">Filter by stok 501 - 1000</option>
+        <option value="1001-2000">Filter by stok 1001 - 2000</option>
     </select>
-    </div>
-    </div>
-    <div class="mb-2">
-        <!-- Filter range harga barang -->
-        <label for="filter-range-harga" class="sr-only">Filter Range Harga Barang</label>
-        <div class="relative">
-            <div class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
-     <svg class="w-[16px] h-[16px] text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 11 20">
-    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1.75 15.363a4.954 4.954 0 0 0 2.638 1.574c2.345.572 4.653-.434 5.155-2.247.502-1.813-1.313-3.79-3.657-4.364-2.344-.574-4.16-2.551-3.658-4.364.502-1.813 2.81-2.818 5.155-2.246A4.97 4.97 0 0 1 10 5.264M6 17.097v1.82m0-17.5v2.138"/>
-  </svg>
-  </div>
-    <select id="filter-range-harga" class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                <option value="" >Select Harga Range</option>
-                <option value="1000-100.000">Filter by range harga Rp. 1.000 - Rp. 100.000</option>
-                <option value="100.000-500.000">Filter by range harga Rp. 100.000 - Rp. 500.000</option>
-                <option value="500.000-1.000.000">Filter by range harga Rp. 500.000 - Rp. 1.000.000</option>
-                <option value="1.000.000-5.000.000">Filter by range harga Rp. 1.000.000 - Rp. 5.000.000</option>
-                <option value="5.000.000-10.000.000">Filter by range harga Rp. 5.000.000 - Rp. 10.000.000</option>
-                <option value="10.000.000-50.000.000">Filter by range harga Rp. 10.000.000 - Rp. 50.000.000</option>
-                <option value="50.000.000-100.000.000">Filter by range harga Rp. 50.000.000 - Rp. 100.000.000</option>
-                <option value="100.000.000-500.000.000">Filter by range harga Rp. 100.000.000 - Rp. 500.000.000</option>
-                <option value="500.000.000-100.000.000.000">Filter range by harga Rp. 500.000.000 - Rp. 100.000.000.000</option>
-            </select>
     </div>
     </div>
      <div class="mb-2">
