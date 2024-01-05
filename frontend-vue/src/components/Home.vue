@@ -15,15 +15,23 @@ export default {
                 id: '',
                 satuan: '',
             },
-            daftarSatuan: []
+            daftarSatuan: [],
+            filterValues: {
+            kodeBarang: '',
+            rangeStok: '',
+            rangeHarga: '',
+            satuan: '',
+        },
         }
     },
-    mounted() {   
+
+    mounted() {
         this.tampilPenjualan();
         this.tampilUser();
         this.tampilBarang();
         this.tampilSatuan();
     },
+    
     methods: {
         async tampilPenjualan(){
             const response = await axios.get(`https://api-group9-prognet.manpits.xyz/api/penjualan`);
@@ -76,7 +84,100 @@ export default {
         getSatuan(satuan_id) {
             const satuan = this.daftarSatuan.find(satuan => satuan.id == satuan_id);
             return satuan ? satuan.satuan : 'Unknown';
+        },
+
+        filterBarang() {
+        // Simpan salinan daftar barang asli
+        if (!this.originalDaftarBarang) {
+            this.originalDaftarBarang = [...this.daftarBarang];
         }
+
+        const filterIdBarang = this.filterValues.kodeBarang.toLowerCase();
+
+        // Filter daftar barang berdasarkan nilai filter
+        let filteredBarang = this.originalDaftarBarang.filter(barang => {
+            const idMatch = barang.kode.toLowerCase().includes(filterIdBarang);
+            // You can add more filter conditions if needed
+            return idMatch;
+        });
+
+        // Jika filter kosong, atur ulang daftar barang dengan daftar barang asli
+        if (!filterIdBarang) {
+            this.tampilBarang();
+        } else {
+            // Atur ulang daftar barang dengan hasil filter
+            this.daftarBarang = filteredBarang;
+        }
+        },
+
+        filterSatuan() {
+            // Simpan salinan daftar barang asli
+            if (!this.originalDaftarBarang) {
+                this.originalDaftarBarang = [...this.daftarBarang];
+            }
+
+            const filterIdSatuan = this.filterValues.satuan.toLowerCase();
+
+            // Filter daftar barang berdasarkan satuan yang dipilih
+            let filteredBarang = this.originalDaftarBarang.filter(barang => {
+                const idSatuanMatch = this.getSatuan(barang.satuan_id).toLowerCase().includes(filterIdSatuan);
+                // You can add more filter conditions if needed
+                return idSatuanMatch;
+            });
+
+            // Jika filter kosong, atur ulang daftar barang dengan daftar barang asli
+            if (!filterIdSatuan) {
+                this.tampilBarang();
+            } else {
+                // Atur ulang daftar barang dengan hasil filter
+                this.daftarBarang = filteredBarang;
+            }
+
+            // Simpan salinan daftar satuan asli
+            if (!this.originalDaftarSatuan) {
+                this.originalDaftarSatuan = [...this.daftarSatuan];
+            }
+
+            // Filter daftar satuan berdasarkan nilai filter
+            let filteredSatuan = this.originalDaftarSatuan.filter(satuan => {
+                const idMatch = this.getSatuan(satuan.id).toLowerCase().includes(filterIdSatuan);
+                // You can add more filter conditions if needed
+                return idMatch;
+            });
+
+            // Jika filter kosong, atur ulang daftar satuan dengan daftar satuan asli
+            if (!filterIdSatuan) {
+                this.tampilSatuan();
+            } else {
+                // Atur ulang daftar satuan dengan hasil filter
+                this.daftarSatuan = filteredSatuan;
+            }
+        },
+
+        filterStok(){
+            // Simpan salinan daftar barang asli
+            if (!this.originalDaftarBarang) {
+                this.originalDaftarBarang = [...this.daftarBarang];
+            }
+
+            const filterRangeStok = this.filterValues.rangeStok.toLowerCase();
+
+            // Filter daftar barang berdasarkan nilai filter
+            let filteredBarang = this.originalDaftarBarang.filter(barang => {
+                const idMatch = barang.stok.toLowerCase().includes(filterRangeStok);
+                // You can add more filter conditions if needed
+                return idMatch;
+            });
+
+            // Jika filter kosong, atur ulang daftar barang dengan daftar barang asli
+            if (!filterRangeStok) {
+                this.tampilBarang();
+            } else {
+                // Atur ulang daftar barang dengan hasil filter
+                this.daftarBarang = filteredBarang;
+            }
+        },
+        
     }
 }
 </script>
@@ -264,7 +365,7 @@ export default {
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                 </svg>
             </div>
-        <input type="text" id="filter-kode-barang" class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search by ID Barang">
+        <input type="text" id="filter-kode-barang" class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search by ID Barang" v-model="filterValues.kodeBarang" @input="filterBarang">
     </div>
     </div>
         <div class="mb-2">
@@ -276,15 +377,16 @@ export default {
     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h6m-6 4h6m-6 4h6M1 1v18l2-2 2 2 2-2 2 2 2-2 2 2V1l-2 2-2-2-2 2-2-2-2 2-2-2Z"/>
   </svg>
     </div>
-    <select id="filter-range-stok" class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                <option value="1-25">Filter by stok 1 - 10</option>
-                <option value="25-50">Filter by stok 25 - 25</option>
-                <option value="50-100">Filter by stok 50 - 100</option>
-                <option value="100-200">Filter by stok 100 - 200</option>
-                <option value="200-500">Filter by stok 200 - 500</option>
-                <option value="500-1000">Filter by stok 500 - 1000</option>
-                <option value="1000-2000">Filter by stok 1000 - 2000</option>
-            </select>
+    <select id="filter-range-stok" class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" @change="filterStok" v-model="filterValues.rangeStok">
+        <option value="" >Select Stok Range</option>
+        <option value="1-25">Filter by stok 1 - 10</option>
+        <option value="25-50">Filter by stok 25 - 25</option>
+        <option value="50-100">Filter by stok 50 - 100</option>
+        <option value="100-200">Filter by stok 100 - 200</option>
+        <option value="200-500">Filter by stok 200 - 500</option>
+        <option value="500-1000">Filter by stok 500 - 1000</option>
+        <option value="1000-2000">Filter by stok 1000 - 2000</option>
+    </select>
     </div>
     </div>
     <div class="mb-2">
@@ -297,6 +399,7 @@ export default {
   </svg>
   </div>
     <select id="filter-range-harga" class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option value="" >Select Harga Range</option>
                 <option value="1000-100.000">Filter by range harga Rp. 1.000 - Rp. 100.000</option>
                 <option value="100.000-500.000">Filter by range harga Rp. 100.000 - Rp. 500.000</option>
                 <option value="500.000-1.000.000">Filter by range harga Rp. 500.000 - Rp. 1.000.000</option>
@@ -318,7 +421,7 @@ export default {
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                 </svg>
             </div>
-        <input type="text" id="filter-satuan" class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search by Satuan">
+        <input type="text" id="filter-satuan" class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search by Satuan" v-model="filterValues.satuan" @input="filterSatuan">
     </div>
     </div>
     </div>
