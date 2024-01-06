@@ -165,19 +165,20 @@ export default {
                 this.originalDaftarPenjualan = [...this.daftarPenjualan];
             }
 
-            const filterTanggal = this.filterValues.tanggal;
+            const startDate = this.filterValues.startDate;
+            const endDate = this.filterValues.endDate;
 
-            // Filter daftar penjualan berdasarkan nilai filter
+            // Filter daftar penjualan berdasarkan range tanggal
             let filteredTanggal = this.originalDaftarPenjualan.filter(penjualan => {
                 const tanggalPenjualan = new Date(penjualan.created_at).toISOString().split('T')[0];
-                return tanggalPenjualan === filterTanggal;
+                return (!startDate || tanggalPenjualan >= startDate) && (!endDate || tanggalPenjualan <= endDate);
             });
 
-            // Jika filter kosong, atur ulang daftar barang dengan daftar barang asli
-            if (!filterTanggal) {
+            // Jika filter kosong, atur ulang daftar penjualan dengan daftar penjualan asli
+            if (!startDate && !endDate) {
                 this.tampilPenjualan();
             } else {
-                // Atur ulang daftar barang dengan hasil filter
+                // Atur ulang daftar penjualan dengan hasil filter
                 this.daftarPenjualan = filteredTanggal;
             }
         },
@@ -372,13 +373,22 @@ export default {
                 <option value="kecil-ke-besar">Filter by Harga Terkecil</option>
             </select>
         </div>
+    </div>
+    <div class="flex space-x-4">
+        <div class="flex items-center">
+            <div class="flex flex-col">
+                <label for="filter-start-date" class="block text-sm font-medium text-gray-700">Start Date:</label>
+                <input type="date" id="filter-start-date" class="text-sm text-gray-900 border border-gray-300 rounded-lg w-36 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" @change="filterTanggal" v-model="filterValues.startDate">
+            </div>
         </div>
-        <div>
-            <!-- Filter tanggal -->
-            <label for="filter-date" class="sr-only">Filter Tanggal</label>
-            <input type="date" id="filter-date" class="text-sm text-gray-900 border border-gray-300 rounded-lg w-36 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" @change="filterTanggal" v-model="filterValues.tanggal">
+        <div class="flex items-center">
+            <div class="flex flex-col">
+                <label for="filter-end-date" class="block text-sm font-medium text-gray-700">End Date:</label>
+                <input type="date" id="filter-end-date" class="text-sm text-gray-900 border border-gray-300 rounded-lg w-36 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" @change="filterTanggal" v-model="filterValues.endDate">
+            </div>
         </div>
     </div>
+</div>
 
     <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 overflow-x-auto shadow-md sm:rounded-lg">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
