@@ -20,6 +20,8 @@ export default {
             kodeBarang: '',
             rangeStok: '',
             rangeHarga: '',
+            idTransaksi: '',
+            idKasir: '',
             satuan: '',
         },
         }
@@ -84,6 +86,78 @@ export default {
         getSatuan(satuan_id) {
             const satuan = this.daftarSatuan.find(satuan => satuan.id == satuan_id);
             return satuan ? satuan.satuan : 'Unknown';
+        },
+
+        filterTransaksi() {
+            // Simpan salinan daftar penjualan asli
+            if (!this.originalDaftarPenjualan) {
+                this.originalDaftarPenjualan = [...this.daftarPenjualan];
+            }
+
+            const filterIdTransaksi = this.filterValues.idTransaksi.toLowerCase();
+
+            // Filter daftar penjualan berdasarkan nilai filter
+            let filteredTransaksi = this.originalDaftarPenjualan.filter(penjualan => {
+                const idMatch = penjualan.nomortransaksi.toLowerCase().includes(filterIdTransaksi);
+                // You can add more filter conditions if needed
+                return idMatch;
+            });
+
+            // Jika filter kosong, atur ulang daftar barang dengan daftar barang asli
+            if (!filterIdTransaksi) {
+                this.tampilPenjualan();
+            } else {
+                // Atur ulang daftar barang dengan hasil filter
+                this.daftarPenjualan = filteredTransaksi;
+            }
+        },
+        
+        filterKasir() {
+            // Simpan salinan daftar penjualan asli
+            if (!this.originalDaftarPenjualan) {
+                this.originalDaftarPenjualan = [...this.daftarPenjualan];
+            }
+
+            const filterIdKasir = this.filterValues.idKasir.toLowerCase();
+
+            // Filter daftar penjualan berdasarkan nilai filter
+            let filteredKasir = this.originalDaftarPenjualan.filter(penjualan => {
+                const idMatch = this.getCashierName(penjualan.user_id).toLowerCase().includes(filterIdKasir) || this.getCashierEmail(penjualan.user_id).toLowerCase().includes(filterIdKasir);
+                // You can add more filter conditions if needed
+                return idMatch;
+            });
+
+            // Jika filter kosong, atur ulang daftar barang dengan daftar barang asli
+            if (!filterIdKasir) {
+                this.tampilPenjualan();
+            } else {
+                // Atur ulang daftar barang dengan hasil filter
+                this.daftarPenjualan = filteredKasir;
+            }
+        },
+
+        filterHargaTransaksi() {
+            // Simpan salinan daftar penjualan asli
+            if (!this.originalDaftarPenjualan) {
+                this.originalDaftarPenjualan = [...this.daftarPenjualan];
+            }
+
+            const filterRangeHarga = this.filterValues.rangeHargaTransaksi;
+
+            // Filter daftar penjualan sort terbesar kecil dan sebaliknya
+            let filteredHarga = this.originalDaftarPenjualan.filter(penjualan => {
+                const hargaMatch = (penjualan.totalharga >= parseInt(filterRangeHarga.split('-')[0]) && penjualan.totalharga <= parseInt(filterRangeHarga.split('-')[1]));
+                // You can add more filter conditions if needed
+                return hargaMatch;
+            });
+
+            // Jika filter kosong, atur ulang daftar penjualan dengan daftar penjualan asli
+            if (!filterRangeHarga) {
+                this.tampilPenjualan();
+            } else {
+                // Atur ulang daftar penjualan dengan hasil filter
+                this.daftarPenjualan = filteredHarga;
+            }
         },
 
         filterBarang() {
@@ -200,8 +274,7 @@ export default {
                 // Atur ulang daftar barang dengan hasil filter
                 this.daftarBarang = filteredHarga;
             }
-        },
-        
+        }
     }
 }
 </script>
@@ -249,7 +322,7 @@ export default {
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                 </svg>
             </div>
-            <input type="text" id="table-search-users" class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search by Transaksi">
+            <input type="text" id="table-search-users" class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search by Transaksi" v-model="filterValues.idTransaksi" @input="filterTransaksi">
         </div>
         <div>
             <!-- Filter berdasarkan user dan Gmail -->
@@ -260,7 +333,7 @@ export default {
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                 </svg>
             </div>
-            <input type="text" id="filter-user-gmail" class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search by Kasir">
+            <input type="text" id="filter-user-gmail" class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search by Kasir" v-model="filterValues.idKasir" @input="filterKasir">
         </div>
         </div>
         <div>
@@ -422,7 +495,7 @@ export default {
             <div class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
         <svg class="w-[16px] h-[16px] text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 20">
     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h6m-6 4h6m-6 4h6M1 1v18l2-2 2 2 2-2 2 2 2-2 2 2V1l-2 2-2-2-2 2-2-2-2 2-2-2Z"/>
-  </svg>
+</svg>
     </div>
     <select id="filter-range-stok" class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" @change="filterStok" v-model="filterValues.rangeStok">
         <option value="" >Select Stok Range</option>
@@ -437,7 +510,7 @@ export default {
     </select>
     </div>
     </div>
-     <div class="mb-2">
+    <div class="mb-2">
         <!-- Filter satuan -->
         <label for="filter-satuan" class="sr-only">Filter Satuan</label>
         <div class="relative">
