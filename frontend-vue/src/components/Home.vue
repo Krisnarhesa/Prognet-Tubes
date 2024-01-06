@@ -23,6 +23,7 @@ export default {
             idTransaksi: '',
             sortHargaTransaksi: '',
             idKasir: '',
+            tanggal: '',
             satuan: '',
         },
         }
@@ -158,6 +159,28 @@ export default {
             this.daftarPenjualan = sortedHarga;
         },
 
+        filterTanggal() {
+            // Simpan salinan daftar penjualan asli
+            if (!this.originalDaftarPenjualan) {
+                this.originalDaftarPenjualan = [...this.daftarPenjualan];
+            }
+
+            const filterTanggal = this.filterValues.tanggal;
+
+            // Filter daftar penjualan berdasarkan nilai filter
+            let filteredTanggal = this.originalDaftarPenjualan.filter(penjualan => {
+                const tanggalPenjualan = new Date(penjualan.created_at).toISOString().split('T')[0];
+                return tanggalPenjualan === filterTanggal;
+            });
+
+            // Jika filter kosong, atur ulang daftar barang dengan daftar barang asli
+            if (!filterTanggal) {
+                this.tampilPenjualan();
+            } else {
+                // Atur ulang daftar barang dengan hasil filter
+                this.daftarPenjualan = filteredTanggal;
+            }
+        },
         filterBarang() {
         // Simpan salinan daftar barang asli
         if (!this.originalDaftarBarang) {
@@ -353,7 +376,7 @@ export default {
         <div>
             <!-- Filter tanggal -->
             <label for="filter-date" class="sr-only">Filter Tanggal</label>
-            <input type="date" id="filter-date" class="text-sm text-gray-900 border border-gray-300 rounded-lg w-36 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Filter by Tanggal">
+            <input type="date" id="filter-date" class="text-sm text-gray-900 border border-gray-300 rounded-lg w-36 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" @change="filterTanggal" v-model="filterValues.tanggal">
         </div>
     </div>
 
