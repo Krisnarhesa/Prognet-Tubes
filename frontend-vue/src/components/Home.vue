@@ -45,9 +45,6 @@ export default {
         async tampilUser(){
             const response = await axios.get(`https://api-group9-prognet.manpits.xyz/api/user`);
             this.daftarUser = response.data;
-            //console.log(this.dataUser);
-
-            //return [response.data.name, response.data.email ];
         },
         formatCurrency(num){
             let idrCurrency = new Intl.NumberFormat('id-ID', {
@@ -58,8 +55,6 @@ export default {
             return idrCurrency.format(num);
         },
         getCashierName(userId) {
-            //console.log('UserId:', userId);
-            //console.log('DaftarUser:', this.daftarUser);
             const user = this.daftarUser.find(user => user.id == userId);
             return user ? user.name : 'Unknown';
         },
@@ -83,7 +78,6 @@ export default {
         async tampilSatuan(){
             const response = await axios.get(`https://api-group9-prognet.manpits.xyz/api/satuanbarang`);
             this.daftarSatuan = response.data;
-            //console.log(this.daftarSatuan);
         },
         getSatuan(satuan_id) {
             const satuan = this.daftarSatuan.find(satuan => satuan.id == satuan_id);
@@ -101,7 +95,6 @@ export default {
             // Filter daftar penjualan berdasarkan nilai filter
             let filteredTransaksi = this.originalDaftarPenjualan.filter(penjualan => {
                 const idMatch = penjualan.nomortransaksi.toLowerCase().includes(filterIdTransaksi);
-                // You can add more filter conditions if needed
                 return idMatch;
             });
 
@@ -183,27 +176,27 @@ export default {
             }
         },
         filterBarang() {
-        // Simpan salinan daftar barang asli
-        if (!this.originalDaftarBarang) {
-            this.originalDaftarBarang = [...this.daftarBarang];
-        }
+            // Simpan salinan daftar barang asli
+            if (!this.originalDaftarBarang) {
+                this.originalDaftarBarang = [...this.daftarBarang];
+            }
 
-        const filterIdBarang = this.filterValues.kodeBarang.toLowerCase();
+            const filterIdBarang = this.filterValues.kodeBarang.toLowerCase();
 
-        // Filter daftar barang berdasarkan nilai filter
-        let filteredBarang = this.originalDaftarBarang.filter(barang => {
-            const idMatch = barang.kode.toLowerCase().includes(filterIdBarang);
-            // You can add more filter conditions if needed
-            return idMatch;
-        });
+            // Filter daftar barang berdasarkan nilai filter
+            let filteredBarang = this.originalDaftarBarang.filter(barang => {
+                const idMatch = barang.kode.toLowerCase().includes(filterIdBarang);
+                // You can add more filter conditions if needed
+                return idMatch;
+            });
 
-        // Jika filter kosong, atur ulang daftar barang dengan daftar barang asli
-        if (!filterIdBarang) {
-            this.tampilBarang();
-        } else {
-            // Atur ulang daftar barang dengan hasil filter
-            this.daftarBarang = filteredBarang;
-        }
+            // Jika filter kosong, atur ulang daftar barang dengan daftar barang asli
+            if (!filterIdBarang) {
+                this.tampilBarang();
+            } else {
+                // Atur ulang daftar barang dengan hasil filter
+                this.daftarBarang = filteredBarang;
+            }
         },
 
         filterSatuan() {
@@ -274,7 +267,7 @@ export default {
             }
         },
 
-            filterHarga() {
+        filterHarga() {
             // Simpan salinan daftar barang asli
             if (!this.originalDaftarBarang) {
                 this.originalDaftarBarang = [...this.daftarBarang];
@@ -302,7 +295,7 @@ export default {
 </script>
 
 <template>
-   <div class="relative pt-12">
+<div class="relative pt-12">
         <div class="py-5">
             
             <nav class="flex" aria-label="Breadcrumb">
@@ -315,14 +308,6 @@ export default {
                         Dashboard
                     </a>
                 </li>
-                <!-- <li>
-                <div class="flex items-center">
-                    <svg class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
-                    </svg>
-                    <a href="#" class="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ms-2 dark:text-gray-400 dark:hover:text-white">Daftar Penjualan</a>
-                </div>
-                </li> -->
                 <li aria-current="page">
                     <div class="flex items-center">
                         <svg class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
@@ -429,7 +414,7 @@ export default {
                         <div class="ps-3">
                             <div class="text-base font-semibold"> {{  this.getCashierName(penjualan.user_id) }}</div>
                             <div class="font-normal text-gray-500"> {{ this.getCashierEmail(penjualan.user_id) }}</div>
-                        </div>  
+                        </div>
                     </th>
                     <td class="px-6 py-4">
                         <div class="flex items-center">
@@ -463,14 +448,6 @@ export default {
                         Dashboard
                     </a>
                 </li>
-                <!-- <li>
-                <div class="flex items-center">
-                    <svg class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
-                    </svg>
-                    <a href="#" class="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ms-2 dark:text-gray-400 dark:hover:text-white">Daftar Penjualan</a>
-                </div>
-                </li> -->
                 <li aria-current="page">
                     <div class="flex items-center">
                         <svg class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
@@ -587,7 +564,7 @@ export default {
                     <td class="px-6 py-3">
                         <span class="hover:bg-blue-200 bg-blue-100 text-blue-800 text-md font-medium inline-flex gap-2 items-center justify-center px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-blue-400 border border-blue-400">
                             {{barang.kode}}
-                        </span>    
+                        </span>
                     </td>
                     
                     <td scope="row" class="px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
@@ -607,7 +584,7 @@ export default {
                     <td class="px-6 py-3">
                         <span class="hover:bg-blue-200 bg-blue-100 text-blue-800 text-md font-medium inline-flex gap-2 items-center justify-center px-3 py-1 rounded dark:bg-gray-700 dark:text-blue-400 border border-blue-400">
                             {{ this.getSatuan(barang.satuan_id) }}
-                        </span> 
+                        </span>
                     </td>
                 </tr>
         </tbody>

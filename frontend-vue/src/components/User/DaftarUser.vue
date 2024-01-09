@@ -12,7 +12,9 @@ export default {
                 'email': '',
                 'password': ''
             },
-            idUrl : this.$route.params.id,
+            searchValues: {
+            user: '',
+        },
         }
     },
     mounted() {
@@ -24,17 +26,36 @@ export default {
             this.daftarUser = response.data;
             console.log(this.daftarUser);
         },
-        editUser(id){
-            axios
-            .put(`https://api-group9-prognet.manpits.xyz/api/user/${id}`,
-            this.dataUser)
-            .then(() => {this.$router.push({ path: '/user/daftar' })});
-        },
         hapusUser(id){
             axios
             .delete(`https://api-group9-prognet.manpits.xyz/api/user/${id}`)
             .then(() => {this.tampilUser()});
-        }
+        },
+        filterUser() {
+            // Jika daftar user belum disimpan, simpan daftar user asli
+            if (!this.originalDaftarUser) {
+                this.originalDaftarUser = [...this.daftarUser];
+            }
+
+            const filterUser = this.searchValues.user.toLowerCase();
+
+            // Filter user berdasarkan nama dan email
+            let filteredUser = this.originalDaftarUser.filter((user) => {
+                const nameMatch = user.name.toLowerCase().includes(filterUser);
+                const emailMatch = user.email.toLowerCase().includes(filterUser);
+
+                // Return true jika nama atau email cocok dengan filter
+                return nameMatch || emailMatch;
+            });
+
+            // jika filter kosong, tampilkan semua user
+            if (!filterUser) {
+                this.tampilUser();
+            } else {
+                // tampilkan user yang sesuai dengan filter
+                this.daftarUser = filteredUser;
+            }
+        },
     }
 }
 </script>
@@ -54,14 +75,6 @@ export default {
                         User
                     </router-link>
                 </li>
-                <!-- <li>
-                <div class="flex items-center">
-                    <svg class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
-                    </svg>
-                    <a href="#" class="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ms-2 dark:text-gray-400 dark:hover:text-white">Daftar Penjualan</a>
-                </div>
-                </li> -->
                 <li aria-current="page">
                     <div class="flex items-center">
                         <svg class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
@@ -88,12 +101,9 @@ export default {
                 <div id="dropdownAction" class="z-40 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
                     <ul class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownActionButton">
                         <li>
-                            <router-link to="/satuan/tambah" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Tambah User</router-link>
+                            <router-link to="/user/tambah" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Tambah User</router-link>
                         </li>
                     </ul>
-                    <!-- <div class="py-1">
-                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Delete User</a>
-                    </div> -->
                 </div>
             </div>
             <label for="table-search" class="sr-only">Search</label>
@@ -103,7 +113,7 @@ export default {
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                     </svg>
                 </div>
-                <input type="text" id="table-search-users" class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Cari User">
+                <input type="text" id="table-search-users" class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Cari User" v-model="searchValues.user" @input="filterUser">
             </div>
         </div>
 
@@ -147,46 +157,12 @@ export default {
                     </td>
                     <td class="px-6 py-4 gap-3 flex">
                         <!-- Modal toggle -->
-                        <!-- <a href="#" type="button" @click="dataUser.satuan = satuan.id" data-modal-target="editSatuanModal" data-modal-show="editSatuanModal" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a> -->
                         <router-link :to="'/user/edit/' + user.id" type="button" data-modal-target="editUserModal" data-modal-show="editUserModal" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</router-link>
                         <button @click="hapusUser(user.id)" class="font-medium text-red-600 dark:text-red-500 hover:underline">Hapus</button>
                     </td>
                 </tr>
             </tbody>
         </table>
-    </div>   
-    
-    <div id="editUserModal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 items-center justify-center hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
-        <div class="relative w-full max-w-2xl max-h-full">
-            <!-- Modal content -->
-            <form @submit.prevent="editUser(dataUser.id)" class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                <!-- Modal header -->
-                <div class="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
-                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-                        Edit user
-                    </h3>
-                <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="editUserModal">
-                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                    </svg>
-                    <span class="sr-only">Close modal</span>
-                </button>
-                </div>
-                <!-- Modal body -->
-                <div class="p-6 space-y-6">
-                    <div class="grid grid-cols-6 gap-6">
-                        <div class="col-span-12">
-                            <label for="nama-user" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">User</label>
-                            <input type="text" v-model="dataUser.user" id="nama-user" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Bonnie" required="">
-                        </div>
-                    </div>
-                </div>
-                <!-- Modal footer -->
-                <div class="flex items-center p-6 space-x-3 rtl:space-x-reverse border-t border-gray-200 rounded-b dark:border-gray-600">
-                    <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Save all</button>
-                </div>
-            </form>
-        </div>
-    </div>     
+    </div>
     
 </template>
