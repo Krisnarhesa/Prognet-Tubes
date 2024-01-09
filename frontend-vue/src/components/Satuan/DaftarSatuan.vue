@@ -21,12 +21,6 @@ export default {
             this.daftarSatuan = response.data;
             console.log(this.daftarSatuan);
         },
-        editSatuan(id){
-            axios
-            .put(`https://api-group9-prognet.manpits.xyz/api/satuanbarang/${id}`, 
-            this.dataSatuan)
-            .then(() => {this.$router.push({ path: '/satuan/daftar' })});
-        },
         hapusSatuan(id){
             axios
             .delete(`https://api-group9-prognet.manpits.xyz/api/satuanbarang/${id}`)
