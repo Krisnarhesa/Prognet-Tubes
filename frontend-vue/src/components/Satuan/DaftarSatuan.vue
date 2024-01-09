@@ -10,6 +10,9 @@ export default {
                 id: '',
                 satuan: '',
             },
+            searchValues: {
+            satuan: '',
+            },
         }
     },
     mounted() {
@@ -21,17 +24,35 @@ export default {
             this.daftarSatuan = response.data;
             console.log(this.daftarSatuan);
         },
-        editSatuan(id){
-            axios
-            .put(`https://api-group9-prognet.manpits.xyz/api/satuanbarang/${id}`, 
-            this.dataSatuan)
-            .then(() => {this.$router.push({ path: '/satuan/daftar' })});
-        },
         hapusSatuan(id){
             axios
             .delete(`https://api-group9-prognet.manpits.xyz/api/satuanbarang/${id}`)
             .then(() => {this.tampilSatuan()});
-        }
+        },
+        filtersatuan(){
+            // Jika daftar user belum disimpan, simpan daftar user asli
+            if (!this.originalDaftarSatuan) {
+                this.originalDaftarSatuan = [...this.daftarSatuan];
+            }
+
+            const filterSatuan = this.searchValues.satuan.toLowerCase();
+
+            // Filter user berdasarkan nama dan email
+            let filteredSatuan = this.originalDaftarSatuan.filter((satuan) => {
+                const satuanMatch = satuan.satuan.toLowerCase().includes(filterSatuan);
+
+                // Return true jika nama atau email cocok dengan filter
+                return satuanMatch;
+            });
+
+            // jika filter kosong, tampilkan semua user
+            if (!filterSatuan) {
+                this.tampilSatuan();
+            } else {
+                // tampilkan user yang sesuai dengan filter
+                this.daftarSatuan = filteredSatuan;
+            }
+        },
     }
 }
 </script>
@@ -51,14 +72,6 @@ export default {
                         Satuan
                     </router-link>
                 </li>
-                <!-- <li>
-                <div class="flex items-center">
-                    <svg class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
-                    </svg>
-                    <a href="#" class="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ms-2 dark:text-gray-400 dark:hover:text-white">Daftar Penjualan</a>
-                </div>
-                </li> -->
                 <li aria-current="page">
                     <div class="flex items-center">
                         <svg class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
@@ -100,7 +113,7 @@ export default {
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                     </svg>
                 </div>
-                <input type="text" id="table-search-users" class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Cari satuan">
+                <input type="text" id="table-search-users" class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Cari satuan" v-model="searchValues.satuan" @input="filtersatuan">
             </div>
         </div>
 

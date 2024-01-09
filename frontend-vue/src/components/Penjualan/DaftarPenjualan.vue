@@ -10,7 +10,10 @@ export default {
                 name: '',
                 email: '',
             },
-            daftarUser: []
+            daftarUser: [],
+            searchValues: {
+                penjualan: '',
+            }
         }
     },
     mounted() {   
@@ -52,6 +55,32 @@ export default {
         getCashierEmail(userId) {
             const user = this.daftarUser.find(user => user.id == userId);
             return user ? user.email : 'Unknown';
+        },
+        filterPenjualan(){
+            // Jika daftar user belum disimpan, simpan daftar user asli
+            if (!this.originalDaftarPenjualan) {
+                this.originalDaftarPenjualan = [...this.daftarPenjualan];
+            }
+
+            const filterPenjualan = this.searchValues.penjualan.toLowerCase();
+
+            // Filter user berdasarkan nama dan email
+            let filteredPenjualan = this.originalDaftarPenjualan.filter((penjualan) => {
+                const nomorTransaksiMatch = penjualan.nomortransaksi.toLowerCase().includes(filterPenjualan);
+                const cashierNameMatch = this.getCashierName(penjualan.user_id).toLowerCase().includes(filterPenjualan);
+                const cashierEmailMatch = this.getCashierEmail(penjualan.user_id).toLowerCase().includes(filterPenjualan);
+
+                // Return true jika nama atau email cocok dengan filter
+                return nomorTransaksiMatch || cashierNameMatch || cashierEmailMatch;
+            });
+
+            // jika filter kosong, tampilkan semua user
+            if (!filterPenjualan) {
+                this.tampilPenjualan();
+            } else {
+                // tampilkan user yang sesuai dengan filter
+                this.daftarPenjualan = filteredPenjualan;
+            }
         }
     }
 }
@@ -72,14 +101,6 @@ export default {
                         Penjualan
                     </a>
                 </li>
-                <!-- <li>
-                <div class="flex items-center">
-                    <svg class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
-                    </svg>
-                    <a href="#" class="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ms-2 dark:text-gray-400 dark:hover:text-white">Daftar Penjualan</a>
-                </div>
-                </li> -->
                 <li aria-current="page">
                     <div class="flex items-center">
                         <svg class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
@@ -127,7 +148,7 @@ export default {
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                     </svg>
                 </div>
-                <input type="text" id="table-search-users" class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Cari penjualan">
+                <input type="text" id="table-search-users" class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Cari penjualan" v-model="searchValues.penjualan" @input="filterPenjualan">
             </div>
         </div>
 
