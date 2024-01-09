@@ -118,7 +118,7 @@ export default {
                 <div id="dropdownAction" class="z-40 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
                     <ul class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownActionButton">
                         <li>
-                            <router-link to="/satuan/tambah" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Tambah Barang</router-link>
+                            <router-link to="/barang/tambah" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Tambah Barang</router-link>
                         </li>
                     </ul>
                     <!-- <div class="py-1">
